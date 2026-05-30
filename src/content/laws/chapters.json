@@ -1,0 +1,9 @@
+[
+  { "number": 1,  "slug": "chapter-01", "title": "安全生产相关国家政策",           "examWeight": 2 },
+  { "number": 2,  "slug": "chapter-02", "title": "安全生产法律基础知识",           "examWeight": 2 },
+  { "number": 3,  "slug": "chapter-03", "title": "中华人民共和国安全生产法",       "examWeight": 3 },
+  { "number": 4,  "slug": "chapter-04", "title": "安全生产单行法律",               "examWeight": 2 },
+  { "number": 5,  "slug": "chapter-05", "title": "安全生产相关法律",               "examWeight": 3 },
+  { "number": 6,  "slug": "chapter-06", "title": "安全生产行政法规",               "examWeight": 3 },
+  { "number": 7,  "slug": "chapter-07", "title": "安全生产部门规章",               "examWeight": 2 }
+]

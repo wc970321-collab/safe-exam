@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-warm-50 text-gray-800 antialiased;
+  }
+
+  /* 中文排版优化 */
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+  }
+
+  /* 链接样式 */
+  a {
+    @apply text-primary-600 hover:text-primary-700 transition-colors;
+  }
+}
+
+@layer components {
+  /* Markdown 内容区域 */
+  .prose-cn {
+    @apply text-gray-800 leading-relaxed;
+  }
+
+  .prose-cn h1 {
+    @apply text-2xl font-bold mt-8 mb-4 text-gray-900;
+  }
+
+  .prose-cn h2 {
+    @apply text-xl font-semibold mt-8 mb-3 border-l-4 border-primary-500 pl-4 text-gray-900;
+  }
+
+  .prose-cn h3 {
+    @apply text-lg font-semibold mt-6 mb-2 text-gray-900;
+  }
+
+  .prose-cn p {
+    @apply mb-4 leading-loose;
+  }
+
+  .prose-cn ul,
+  .prose-cn ol {
+    @apply mb-4 pl-6 leading-loose;
+  }
+
+  .prose-cn ul {
+    @apply list-disc;
+  }
+
+  .prose-cn ol {
+    @apply list-decimal;
+  }
+
+  .prose-cn li {
+    @apply mb-1;
+  }
+
+  .prose-cn table {
+    @apply w-full border-collapse mb-4 text-sm;
+  }
+
+  .prose-cn th {
+    @apply bg-primary-50 text-left p-3 border border-gray-200 font-semibold text-primary-900;
+  }
+
+  .prose-cn td {
+    @apply p-3 border border-gray-200;
+  }
+
+  .prose-cn tr:hover {
+    @apply bg-gray-50;
+  }
+
+  .prose-cn blockquote {
+    @apply border-l-4 border-accent-400 bg-accent-50 px-4 py-2 mb-4 text-gray-700;
+  }
+
+  .prose-cn strong {
+    @apply font-semibold text-gray-900;
+  }
+
+  .prose-cn code {
+    @apply bg-gray-100 px-1.5 py-0.5 rounded text-sm text-primary-700 font-mono;
+  }
+
+  .prose-cn hr {
+    @apply my-8 border-gray-200;
+  }
+
+  /* 移动端触摸目标 */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
