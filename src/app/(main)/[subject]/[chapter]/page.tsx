@@ -3,7 +3,6 @@ import Link from "next/link";
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import { compileMDX } from "next-mdx-remote/rsc";
-import remarkGfm from "remark-gfm";
 import { getSubject, getChapters, getAdjacentChapters } from "@/lib/subjects";
 import { SUBJECTS } from "@/lib/constants";
 import Breadcrumb from "@/components/layout/Breadcrumb";
@@ -110,9 +109,6 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
     source,
     options: {
       parseFrontmatter: true,
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-      },
     },
     components: {
       table: (props: any) => (
