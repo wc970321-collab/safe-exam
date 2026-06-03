@@ -40,6 +40,9 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
+  other: {
+    "baidu-site-verification": "codeva-YEDmQNhWIw",
+  },
 };
 
 export default function RootLayout({
@@ -49,9 +52,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN" className={notoSansSC.className}>
-      <head>
-        <meta name="baidu-site-verification" content="codeva-YEDmQNhWIw" />
-      </head>
       <body className="min-h-screen flex flex-col">{children}</body>
     </html>
   );
