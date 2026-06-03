@@ -3,7 +3,7 @@ import type { SubjectMeta } from "./types";
 export const SITE_NAME = "注安师免费学习平台";
 export const SITE_DESCRIPTION =
   "中级注册安全工程师免费学习平台，提供法律法规、安全管理、技术基础、专业实务等科目的学习笔记、思维导图、章节练习。100% 免费，助你高效通关。";
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://safe-exam.vercel.app";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://zhuanshi365.cn";
 
 export const SUBJECTS: SubjectMeta[] = [
   {
