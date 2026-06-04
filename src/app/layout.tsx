@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
-  other: {
-    "baidu-site-verification": "codeva-YEDmQNhWIw",
+  verification: {
+    baidu: "codeva-YEDmQNhWIw",
   },
 };
 
@@ -53,10 +53,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN" className={notoSansSC.className}>
-      <head>
+      <body className="min-h-screen flex flex-col">
+        {children}
         <Script
           id="baidu-analytics"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
 var _hmt = _hmt || [];
@@ -69,8 +70,7 @@ var _hmt = _hmt || [];
 `,
           }}
         />
-      </head>
-      <body className="min-h-screen flex flex-col">{children}</body>
+      </body>
     </html>
   );
 }
