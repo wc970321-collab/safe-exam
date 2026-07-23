@@ -1,9 +1,12 @@
-// 直接 REST API 方式提交线索，不依赖 Supabase JS 客户端
-// 避免 RLS / Data API 权限问题
+import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
+// 1. 导出标准客户端（给登录和进度同步用）
+export const supabase = createClient(supabaseUrl, supabaseKey)
+
+// 2. 保留你原来的线索提交逻辑（适配旧代码）
 export interface Lead {
   name: string;
   contact: string;
@@ -14,34 +17,12 @@ export interface Lead {
 
 export async function submitLead(lead: Lead): Promise<{ success: boolean; error?: string }> {
   if (!supabaseUrl || !supabaseKey) {
-    return { success: false, error: "线索收集功能暂未开放，敬请期待。" };
+    return { success: false, error: "功能暂未开放" };
   }
 
-  try {
-    const response = await fetch(`${supabaseUrl}/rest/v1/leads`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": supabaseKey,
-        "Authorization": `Bearer ${supabaseKey}`,
-        "Prefer": "return=minimal",
-      },
-      body: JSON.stringify({
-        name: lead.name,
-        contact: lead.contact,
-        subject: lead.subject,
-        intent: lead.intent,
-        note: lead.note,
-      }),
-    });
-
-    if (!response.ok) {
-      const text = await response.text();
-      return { success: false, error: `提交失败 (${response.status})` };
-    }
-
-    return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message || "提交失败，请稍后重试" };
-  }
+  // 使用新导出的客户端重写，更简洁
+  const { error } = await supabase.from('leads').insert([lead])
+  
+  if (error) return { success: false, error: error.message };
+  return { success: true };
 }
