@@ -59,24 +59,27 @@ export default function QuizClient({
   const handleSubmit = async () => {
     setState("submitted");
     
-    // 保留原来的本地保存（保险起见）
+    // 1. 保留本地保存
     saveProgress(subject, chapter, score, totalQuestions);
 
-    // 如果用户登录了，同步到 Supabase
+    // 2. 云端同步
     if (user) {
-      console.log("正在同步进度到云端...");
-      const progressData = questions.map((q) => ({
-        user_id: user.id,
-        quiz_id: q.id,
-        is_correct: answers[q.id]?.toUpperCase() === q.answer.toUpperCase(),
-      }));
+      try {
+        const progressData = questions.map((q) => ({
+          user_id: user.id,
+          quiz_id: q.id,
+          is_correct: answers[q.id]?.toUpperCase() === q.answer.toUpperCase(),
+        }));
 
-      const { error } = await supabase
-        .from("user_progress")
-        .upsert(progressData, { onConflict: "user_id, quiz_id" });
+        // 简化的 upsert 调用
+        const { error } = await supabase
+          .from("user_progress")
+          .upsert(progressData);
 
-      if (error) console.error("同步失败:", error.message);
-      else console.log("同步成功！");
+        if (error) console.error("同步出错:", error.message);
+      } catch (err) {
+        console.error("云同步异常:", err);
+      }
     }
   };
 
