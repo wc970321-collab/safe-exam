@@ -1,12 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder";
 
-// 1. 导出标准客户端（给登录和进度同步用）
+// 只有在有真实配置时才真正初始化，防止编译阶段报错
 export const supabase = createClient(supabaseUrl, supabaseKey)
 
-// 2. 保留你原来的线索提交逻辑（适配旧代码）
 export interface Lead {
   name: string;
   contact: string;
@@ -16,13 +15,11 @@ export interface Lead {
 }
 
 export async function submitLead(lead: Lead): Promise<{ success: boolean; error?: string }> {
-  if (!supabaseUrl || !supabaseKey) {
-    return { success: false, error: "功能暂未开放" };
+  try {
+    const { error } = await supabase.from('leads').insert([lead])
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+  } catch (err: any) {
+    return { success: false, error: err.message };
   }
-
-  // 使用新导出的客户端重写，更简洁
-  const { error } = await supabase.from('leads').insert([lead])
-  
-  if (error) return { success: false, error: error.message };
-  return { success: true };
 }
